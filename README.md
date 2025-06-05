@@ -1,9 +1,9 @@
 # domaintools
-A simple Python toolkit to check DNS records (NS, MX, TXT), DNSSEC status, and WHOIS info for a list of domains.
+A simple Python toolkit to check DNS records (NS, MX, TXT), DNSSEC status, WHOIS info, and SSL certificate details (including expiry date and days to expiry) for a list of domains or URLs.
 
 # 📘 Domain Tools
 
-This project provides scripts to analyze DNS and WHOIS information for domains, supporting multiple output formats and batch processing.
+This project provides scripts to analyze DNS, WHOIS, and SSL certificate information for domains and websites, supporting multiple output formats and batch processing.
 
 ## 🛠️ Features
 
@@ -14,6 +14,7 @@ This project provides scripts to analyze DNS and WHOIS information for domains, 
   - **TXT (Text Records)** — e.g., SPF, DKIM
   - **DNSSEC status** (enabled or not)
   - **WHOIS info** (registrar, registrant, creation/expiration dates, status, days to expiry)
+  - **SSL certificate info** (issuer, subject, not before, not after, days to expiry, serial number, version)
 - Exports results as:
   - Standard output (`stdout`)
   - CSV file
