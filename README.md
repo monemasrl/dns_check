@@ -29,6 +29,18 @@ Install with:
 pip install dnspython
 ```
 
+Alternatively, to install all dependencies from the requirements.txt file:
+
+```bash
+pip install -r requirements.txt
+```
+
+Or, using pipenv:
+
+```bash
+pipenv install
+```
+
 ## 🚀 Usage
 
 ```bash

@@ -21,9 +21,11 @@ def resolve_record(domain, record_type):
 
 def check_dnssec_enabled(domain):
     try:
-        parent_domain = '.'.join(domain.split('.')[1:])
-        dns.resolver.resolve(parent_domain, 'DS', lifetime=5)
-        return 'ENABLED'
+        response = dns.resolver.resolve(domain, 'DS', lifetime=5)
+        if response.rrset and len(response.rrset) > 0:
+            return 'ENABLED'
+        else:
+            return 'NOT ENABLED'
     except dns.resolver.NoAnswer:
         return 'NOT ENABLED'
     except dns.resolver.NXDOMAIN:
