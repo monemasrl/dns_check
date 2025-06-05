@@ -1,9 +1,9 @@
-# dns_check
-A simple Python tool to check DNS records (NS, MX, TXT) and DNSSEC status for a list of domains.
+# domaintools
+A simple Python toolkit to check DNS records (NS, MX, TXT), DNSSEC status, and WHOIS info for a list of domains.
 
-# 📘 DNS Record Checker
+# 📘 Domain Tools
 
-This script reads a list of domains from a file and retrieves selected DNS records (NS, MX, TXT) and whether **DNSSEC** is enabled.
+This project provides scripts to analyze DNS and WHOIS information for domains, supporting multiple output formats and batch processing.
 
 ## 🛠️ Features
 
@@ -13,6 +13,7 @@ This script reads a list of domains from a file and retrieves selected DNS recor
   - **MX (Mail Exchange)**
   - **TXT (Text Records)** — e.g., SPF, DKIM
   - **DNSSEC status** (enabled or not)
+  - **WHOIS info** (registrar, registrant, creation/expiration dates, status, days to expiry)
 - Exports results as:
   - Standard output (`stdout`)
   - CSV file
@@ -23,11 +24,12 @@ This script reads a list of domains from a file and retrieves selected DNS recor
 - Python 3.7+
 - [`dnspython`](https://www.dnspython.org/)
 - [`tqdm`](https://tqdm.github.io/) (optional, for progress bar)
+- [`whois`](https://pypi.org/project/whois/) (for WHOIS queries)
 
 Install with:
 
 ```bash
-pip install dnspython tqdm
+pip install dnspython tqdm whois
 ```
 
 Alternatively, to install all dependencies from the requirements.txt file:
@@ -44,11 +46,13 @@ pipenv install
 
 ## 🚀 Usage
 
+### DNS Check
+
 ```bash
-python check_dns.py --input domains.txt [OPTIONS]
+python dns_check.py --input domains.txt [OPTIONS]
 ```
 
-## 🎛️ Options
+#### Options
 
 | Option           | Description                                      |
 |------------------|--------------------------------------------------|
@@ -60,7 +64,7 @@ python check_dns.py --input domains.txt [OPTIONS]
 | `--format, -f`    | Output format: `stdout`, `csv`, `json` (default: `stdout`) |
 | `--output, -o`    | Output filename (required if format is `csv` or `json`) |
 
-## 📂 Input file format
+#### Input file format
 
 The input file must contain one domain per line, for example:
 
@@ -70,49 +74,70 @@ google.com
 invalid-domain.xyz
 ```
 
-## 📤 Output examples
+#### Output examples
 
-### Example 1 – Print NS and DNSSEC to stdout
-
+Print NS and DNSSEC to stdout:
 ```bash
-python check_dns.py -i domains.txt --ns --dnssec
+python dns_check.py -i domains.txt --ns --dnssec
+```
+Export MX and TXT records to JSON:
+```bash
+python dns_check.py -i domains.txt --mx --txt -f json -o output.json
+```
+Export all to CSV:
+```bash
+python dns_check.py -i domains.txt --ns --mx --txt --dnssec -f csv -o results.csv
 ```
 
-### Example 2 – Export MX and TXT records to JSON
+### WHOIS Check
 
 ```bash
-python check_dns.py -i domains.txt --mx --txt -f json -o output.json
+python check_whois.py -i domains_whois.txt
 ```
-
-### Example 3 – Export all to CSV
-
+Oppure, senza file di input, passando i domini direttamente:
 ```bash
-python check_dns.py -i domains.txt --ns --mx --txt --dnssec -f csv -o results.csv
+python check_whois.py example.com google.com
 ```
 
-## 📝 Output example (stdout)
+#### Options
 
+| Option           | Description                                      |
+|------------------|--------------------------------------------------|
+| `--input, -i`     | Input file containing a list of domains          |
+| `--format, -f`    | Output format: `stdout`, `csv`, `json` (default: `stdout`) |
+| `--output, -o`    | Output filename (required if format is `csv` or `json`) |
+| `domains`         | List of domains to check if no input file is provided |
+
+#### Output fields
+
+- domain
+- registrar
+- registrant
+- creation_date
+- expiration_date
+- last_updated
+- days_to_expiry
+- status
+
+#### Output example (stdout)
 ```
 Domain: example.com
-  NS: ns1.example.com, ns2.example.com
-  MX: 10 mail.example.com
-  TXT: v=spf1 include:example.com ~all
-  DNSSEC: ENABLED
-
-Domain: nosuchdomain.tld
-  NS: NON-EXISTENT
-  MX: NON-EXISTENT
-  TXT: NON-EXISTENT
-  DNSSEC: NON-EXISTENT
+  Registrar: Example Registrar
+  Registrant: Example Org
+  Creation Date: 2000-01-01T00:00:00
+  Expiration Date: 2030-01-01T00:00:00
+  Days to Expiry: 1800
+  Status: active
+  Last Updated: 2024-01-01T00:00:00
 ```
-
 
 ## ⚠️ Notes
 
 - If no records are found or the domain does not exist, the script marks it as:
   - `NON-EXISTENT` (domain does not resolve)
-  - `ERROR` (temporary or unknown DNS error)
+  - `ERROR` (temporary or unknown DNS/WHOIS error)
 - DNSSEC is checked by verifying the presence of `DS` records in the parent zone.
+- WHOIS output fields may vary depending on the TLD and registry.
 
 ## 📄 License
 
