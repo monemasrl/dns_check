@@ -22,11 +22,12 @@ This script reads a list of domains from a file and retrieves selected DNS recor
 
 - Python 3.7+
 - [`dnspython`](https://www.dnspython.org/)
+- [`tqdm`](https://tqdm.github.io/) (optional, for progress bar)
 
 Install with:
 
 ```bash
-pip install dnspython
+pip install dnspython tqdm
 ```
 
 Alternatively, to install all dependencies from the requirements.txt file:

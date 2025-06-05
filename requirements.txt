@@ -1,3 +1,7 @@
 dnspython==2.7.0
 setuptools==80.3.1
+tqdm==4.67.1
+types-requests==2.32.0.20250602
+types-tqdm==4.67.0.20250516
+urllib3==2.4.0
 wheel==0.45.1

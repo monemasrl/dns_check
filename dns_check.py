@@ -5,6 +5,11 @@ import csv
 import json
 import argparse
 import sys
+import time
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = None
 
 def read_domains_from_file(filename):
     with open(filename, 'r') as f:
@@ -82,7 +87,8 @@ def main():
         sys.exit(1)
 
     results = []
-    for domain in domains:
+    domain_iter = tqdm(domains, desc="Checking domains") if tqdm else domains
+    for domain in domain_iter:
         entry = {'domain': domain}
 
         if args.ns:
