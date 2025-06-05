@@ -50,7 +50,7 @@ pipenv install
 ### DNS Check
 
 ```bash
-python dns_check.py --input domains.txt [OPTIONS]
+python check_dns.py --input domains.txt [OPTIONS]
 ```
 
 #### Options
@@ -79,15 +79,15 @@ invalid-domain.xyz
 
 Print NS and DNSSEC to stdout:
 ```bash
-python dns_check.py -i domains.txt --ns --dnssec
+python check_dns.py -i domains.txt --ns --dnssec
 ```
 Export MX and TXT records to JSON:
 ```bash
-python dns_check.py -i domains.txt --mx --txt -f json -o output.json
+python check_dns.py -i domains.txt --mx --txt -f json -o output.json
 ```
 Export all to CSV:
 ```bash
-python dns_check.py -i domains.txt --ns --mx --txt --dnssec -f csv -o results.csv
+python check_dns.py -i domains.txt --ns --mx --txt --dnssec -f csv -o results.csv
 ```
 
 ### WHOIS Check

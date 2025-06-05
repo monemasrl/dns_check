@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import dns.resolver
 import dns.name
 import dns.exception
@@ -10,6 +11,8 @@ try:
     from tqdm import tqdm
 except ImportError:
     tqdm = None
+
+# ATTENZIONE: Questo file è stato rinominato in check_dns.py e non va più usato direttamente.
 
 def read_domains_from_file(filename):
     with open(filename, 'r') as f:
