@@ -131,6 +131,48 @@ Domain: example.com
   Last Updated: 2024-01-01T00:00:00
 ```
 
+### SSL Certificate Check
+
+```bash
+python check_ssl.py -i urls.txt
+```
+Oppure, senza file di input, passando le URL direttamente:
+```bash
+python check_ssl.py https://example.com google.com
+```
+
+#### Options
+
+| Option           | Description                                      |
+|------------------|--------------------------------------------------|
+| `--input, -i`     | Input file containing a list of URLs              |
+| `--format, -f`    | Output format: `stdout`, `csv`, `json` (default: `stdout`) |
+| `--output, -o`    | Output filename (required if format is `csv` or `json`) |
+| `urls`            | List of URLs to check if no input file is provided |
+
+#### Output fields
+
+- hostname
+- issuer
+- subject
+- not_before
+- not_after
+- days_to_expiry
+- serial_number
+- version
+
+#### Output example (stdout)
+```
+Host: example.com
+  Issuer: {'C': 'US', 'O': 'Let's Encrypt', 'CN': 'R3'}
+  Subject: {'C': 'US', 'ST': 'California', 'L': 'San Francisco', 'O': 'Example Inc', 'CN': 'example.com'}
+  Not Before: May  1 00:00:00 2025 GMT
+  Not After: Jul 30 23:59:59 2025 GMT
+  Days to Expiry: 55
+  Serial Number: 04A1B2C3D4E5F6
+  Version: 3
+```
+
 ## ⚠️ Notes
 
 - If no records are found or the domain does not exist, the script marks it as:
